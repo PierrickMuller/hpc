@@ -153,6 +153,8 @@ static size_t __ifs(struct img_t *img, const struct ifs_t *ifs, size_t passes, s
 
 static void affine_transform(float *x, float *y, const float transform[TRANSFORM_SIZE])
 {
-    *x = transform[0] * *x + transform[1] * *y + transform[2];
-    *y = transform[3] * *x + transform[4] * *y + transform[5];
+    float xtmp = *x;
+    float ytmp = *y;
+    *x = transform[0] * xtmp + transform[1] * ytmp + transform[2];
+    *y = transform[3] * xtmp + transform[4] * ytmp + transform[5];
 }
