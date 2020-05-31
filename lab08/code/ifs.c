@@ -255,5 +255,4 @@ void print128_numi(__m128i var)
     int *val = (int*) &var;//can also use uint32_t instead of 16_t
     printf("Numerical: %d %d %d %d  \n",
            val[0], val[1], val[2], val[3]);
-}
-*/
+}*/
