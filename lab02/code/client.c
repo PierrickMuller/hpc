@@ -9,23 +9,28 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <limits.h>
 
 #ifndef CLIENT_FILE
 #define CLIENT_FILE "client_data.bin"
 #endif
 
-#ifndef FILE_SIZE 
+#ifndef FILE_SIZE
 #define FILE_SIZE (1 << 30) /* 1 GB */
 #endif
 
 static void client_recv(const int sock, const int file)
 {
     int ret;
-    uint8_t buf;
+    size_t buf_size = 8192;
+    if(FILE_SIZE < buf_size)
+      buf_size = FILE_SIZE;
 
-    for (size_t i = 0; i < FILE_SIZE; i++) {
-        /* receive from server */
-        if ((ret = recv(sock, &buf, 1, 0)) < 0) {
+    uint8_t buf[buf_size];
+
+    for (size_t i = 0; i < FILE_SIZE/buf_size; i++) {
+
+        if ((ret = recv(sock, &buf, buf_size, 0)) < 0) {
             perror("recv() error");
             exit(EXIT_FAILURE);
         }
@@ -35,26 +40,27 @@ static void client_recv(const int sock, const int file)
             exit(EXIT_FAILURE);
         }
 
-        if (ret != 1) {
+        if (ret > buf_size) {
             fprintf(stderr, "[%s] Error: sent %d bytes (expected 1)\n", __func__, ret);
             exit(EXIT_FAILURE);
         }
 
-        /* write to file */
-        ret = write(file, &buf, 1);
+
+        ret = write(file, &buf, ret);
 
         if (ret < 0) {
             perror("write() error");
             exit(EXIT_FAILURE);
         }
 
-        if (ret != 1) {
+        if (ret >buf_size) {
             fprintf(stderr, "[%s] Error: %d bytes written (expected 1)", __func__, ret);
             exit(EXIT_FAILURE);
         }
     }
+    printf("[%s] written %ld bytes\n", __func__, (long)FILE_SIZE);
 
-    printf("[%s] written %d bytes\n", __func__, FILE_SIZE);
+
 }
 
 void client_start(const char *ipv4_srv, unsigned short port_srv)

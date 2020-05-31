@@ -14,5 +14,4 @@
 #define MATRIX2_COL 900
 
 #define RUNS 5
-#define ITERATIONS 10
-
+#define ITERATIONS 100

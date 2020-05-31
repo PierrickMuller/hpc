@@ -34,7 +34,7 @@ void rgb_to_grayscale(const struct img_t *img, struct img_t *result)
 
     for (size_t y = 0; y < result->height; y++) {
         for (size_t x = 0; x < result->width; x++) {
-            result->data[y * result->width + x] =
+            result->data[y * result->width + 	x] =
                 FACTOR_R * img->data[index + R_OFFSET] +
                 FACTOR_G * img->data[index + G_OFFSET] +
                 FACTOR_B * img->data[index + B_OFFSET];
@@ -49,7 +49,7 @@ void gaussian_filter(const struct img_t *img, struct img_t *res_img, const uint1
 
     const uint16_t gauss_ponderation = 16;
 
-    for (size_t x = 0; x < img->width; x++) {
+      for (size_t x = 0; x < img->width; x++) {
         for (size_t y = 0; y < img->height; y++) {
             uint16_t pix_acc = 0;
 

@@ -37,7 +37,7 @@ static void matrix_data_init(struct matrix *m)
             }
 
             /* restrict them to range [0 .. RANDOM_DOUBLE_MAX] */
-            m->data[i][j] = (double)rand / (double)UINTMAX_MAX * RANDOM_DOUBLE_MAX; 
+            m->data[i][j] = (double)rand / (double)UINTMAX_MAX * RANDOM_DOUBLE_MAX;
         }
     }
 }

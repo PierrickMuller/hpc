@@ -7,7 +7,7 @@ SRV_FILE=srv_data.bin
 CLIENT_FILE=client_data.bin
 LIBS =
 CC = gcc
-CFLAGS = -g -Wall -Werror -DFILE_SIZE=$(FILE_SIZE) -DSRV_FILE=\"$(SRV_FILE)\" -DCLIENT_FILE=\"$(CLIENT_FILE)\"
+CFLAGS =  -g -Wall -Werror -DFILE_SIZE=$(FILE_SIZE) -DSRV_FILE=\"$(SRV_FILE)\" -DCLIENT_FILE=\"$(CLIENT_FILE)\"
 
 .PHONY: default all clean
 

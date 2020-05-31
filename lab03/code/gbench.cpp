@@ -1,54 +1,65 @@
 /* 26.01.16 - Xavier Ruppen - HPC - REDS - HEIG-VD */
+/* 23.03.20 - Modification par Pierrick Muller pour le laboratoire 3 d'HPC */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "benchmark/benchmark.h"
 #include "bench.h"
 
+#define DATA_LEN 100000
+
 extern "C" {
-#include "matrix.h"
+#include "array_util.h"
+#include "list_util.h"
 }
 
-class MatrixFixture : public benchmark::Fixture {
+class SortFixtureArray : public benchmark::Fixture {
 public :
     void SetUp(const ::benchmark::State&)
     {
-        m1 = matrix_init(MATRIX1_ROW, MATRIX1_COL);
-        m2 = matrix_init(MATRIX2_ROW, MATRIX2_COL);
-        m3 = matrix_init(MATRIX1_ROW, MATRIX2_COL);
+      array_uint64 = array_init(DATA_LEN);
+
     }
 
     void TearDown(const ::benchmark::State&)
     {
-        matrix_clear(m1);
-        matrix_clear(m2);
-        matrix_clear(m3);
+      array_clear(array_uint64);
     }
 
 protected :
-    struct matrix *m1, *m2, *m3;
+  uint64_t *array_uint64;
+};
+
+class SortFixtureList : public benchmark::Fixture {
+public :
+    struct list_element *head;
+
+    void SetUp(const ::benchmark::State&)
+    {
+
+    }
+
+    void TearDown(const ::benchmark::State&)
+    {
+
+    }
+
 };
 
 
-BENCHMARK_F(MatrixFixture, matrix_mult)(benchmark::State& state) {
+BENCHMARK_F(SortFixtureArray, array_sort)(benchmark::State& state) {
     while (state.KeepRunning()) {
-        matrix_zero(m3);
 
-        if (!matrix_mult(m1, m2, m3)) {
-            fprintf(stderr, "[%s] wrong matrix sizes\n", __func__);
-            exit(EXIT_FAILURE);
-        }
+      array_sort(array_uint64,DATA_LEN);
     }
 }
 
-BENCHMARK_F(MatrixFixture, matrix_mult_xchg)(benchmark::State& state) {
+BENCHMARK_F(SortFixtureList, list_sort)(benchmark::State& state) {
     while (state.KeepRunning()) {
-        matrix_zero(m3);
-
-        if (!matrix_mult_xchg(m1, m2, m3)) {
-            fprintf(stderr, "[%s] wrong matrix sizes\n", __func__);
-            exit(EXIT_FAILURE);
-        }
+      // Je laisse l'init et le clear ici, car je suis sure que leur temps de fonctionnement est pris en compte dans le benchmark
+      head = list_init(DATA_LEN);
+      list_sort(head);
+      list_clear(head);
     }
 }
 

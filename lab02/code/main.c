@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 #include "server.h"
 #include "client.h"
@@ -16,8 +17,8 @@
 #define IPV4_SRV "127.0.0.1"
 #define PORT 12345
 
-#ifndef FILE_SIZE 
-#define FILE_SIZE (1 << 30) /* 1 GB */
+#ifndef FILE_SIZE
+#define FILE_SIZE ( 1 << 30 )/* 1 GB */
 #endif
 
 static void time_diff(const struct timespec *start, const struct timespec *end, struct timespec *diff)
@@ -43,9 +44,11 @@ static void time_report(const struct timespec *time)
 
     printf("[%s] Report:\n", __func__);
     printf("[%s] -------\n", __func__);
-    printf("[%s] size: %d bytes\n", __func__, FILE_SIZE);
+    printf("[%s] size: %ld bytes\n", __func__, (long)FILE_SIZE);
     printf("[%s] time: %ld sec and %ld ns\n", __func__, time->tv_sec, time->tv_nsec);
     printf("[%s] rate: %f bytes/sec\n", __func__, rate);
+    //printf("| %ld  | %ld and %ld | %f |\n",(long)FILE_SIZE,time->tv_sec, time->tv_nsec,rate);
+
 }
 
 int main(int argc, char *argv[])

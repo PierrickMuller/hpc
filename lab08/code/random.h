@@ -1,9 +1,13 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stddef.h>
+#include <xmmintrin.h>
 
 struct xorshift32_state {
-    uint32_t a;
+    __m128i a;
 };
 
-uint32_t xorshift32(struct xorshift32_state *state);
+void xorshift32(float * rand,struct xorshift32_state *state,size_t nb_transforms);
