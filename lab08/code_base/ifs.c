@@ -90,7 +90,7 @@ static size_t __ifs(struct img_t *img, const struct ifs_t *ifs, size_t passes, s
 
 void ifs(char *pathname, size_t passes, size_t min_width)
 {
-    const struct ifs_t *i = &st_ifs;//&bf_ifs;//&st_ifs;//&bf_ifs;
+    const struct ifs_t *i = &bf_ifs;//&st_ifs;//&bf_ifs;
     struct img_t *fractal_img;
     size_t width, height;
     float aspect_ratio;

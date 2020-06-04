@@ -227,17 +227,17 @@ static void affine_transform(__m128 *x, __m128 *y,  float* transform, float* ran
 
 
     // On calcule les valeurs des points.
-    xtemp = *x;
-    ytemp = *y;
-    *x = _mm_mul_ps(row03[0],xtemp);
-    temp = _mm_mul_ps(row03[1],ytemp);
-    *x = _mm_add_ps(*x,temp);
-    *x = _mm_add_ps(*x,row03[2]);
+      xtemp = *x;
+      ytemp = *y;
+      *x = _mm_mul_ps(row03[0],xtemp);
+      temp = _mm_mul_ps(row03[1],ytemp);
+      *x = _mm_add_ps(*x,temp);
+      *x = _mm_add_ps(*x,row03[2]);
 
-    *y = _mm_mul_ps(row03[3],xtemp);
-    temp = _mm_mul_ps(row03[4],ytemp);
-    *y = _mm_add_ps(*y,temp);
-    *y = _mm_add_ps(*y,row03[5]);
+      *y = _mm_mul_ps(row03[3],xtemp);
+      temp = _mm_mul_ps(row03[4],ytemp);
+      *y = _mm_add_ps(*y,temp);
+      *y = _mm_add_ps(*y,row03[5]);
 
 }
 
